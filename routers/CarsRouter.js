@@ -27,4 +27,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  const carData = req.body;
+
+  if (carData.make && carData.model && carData.mileage) {
+    try {
+      const newCar = await Cars.insert(carData);
+      res.status(201).json(newCar);
+    } catch (err) {
+      res.status(500).json({ errorMessage: err.message });
+    }
+  } else {
+    res.status(400).json({ erorrMessage: "Please fill out required fields" });
+  }
+});
+
 module.exports = router;
