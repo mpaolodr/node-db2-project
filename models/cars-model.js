@@ -6,7 +6,7 @@ function get() {
 
 function getById(id) {
   return db("cars")
-    .where({ id })
+    .where({ VIN: id })
     .first();
 }
 
