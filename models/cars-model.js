@@ -10,6 +10,14 @@ function getById(id) {
     .first();
 }
 
+function getSales(id) {
+  return db("sales as s")
+    .join("cars as c", "c.VIN", "=", "s.car_id")
+    .select("s.id", "c.make", "s.sold_units")
+    .where({ car_id: id })
+    .first();
+}
+
 function insert(carData) {
   return db("cars")
     .insert(carData)
@@ -45,5 +53,6 @@ module.exports = {
   getById,
   insert,
   update,
-  remove
+  remove,
+  getSales
 };

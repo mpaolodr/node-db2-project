@@ -27,6 +27,17 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/sales", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const sales = await Cars.getSales(id);
+    res.status(200).json(sales);
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   const carData = req.body;
 
