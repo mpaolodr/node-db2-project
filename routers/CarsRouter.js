@@ -42,4 +42,35 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const carData = req.body;
+
+  if (carData.make && carData.model && carData.mileage) {
+    try {
+      const newValue = await Cars.update(carData, id);
+      if (newValue) {
+        res.status(200).json(newValue);
+      } else {
+        res.status(400).json({ errorMessage: "Invalid Id" });
+      }
+    } catch (err) {
+      res.status(500).json({ errorMessage: err.message });
+    }
+  } else {
+    res.status(500).json({ errorMessage: err.message });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await Cars.remove(id);
+    res.status(200).json(deleted);
+  } catch (err) {
+    res.status(500).json({ errorMessage: err.message });
+  }
+});
+
 module.exports = router;

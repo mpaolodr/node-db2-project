@@ -18,8 +18,32 @@ function insert(carData) {
     });
 }
 
+function update(carData, id) {
+  return db("cars")
+    .where({ VIN: id })
+    .update(carData)
+    .then(updated => {
+      return getById(id);
+    });
+}
+
+function remove(id) {
+  return db("cars")
+    .where({ VIN: id })
+    .then(car => {
+      return db("cars")
+        .where({ VIN: id })
+        .del()
+        .then(deleted => {
+          return car;
+        });
+    });
+}
+
 module.exports = {
   get,
   getById,
-  insert
+  insert,
+  update,
+  remove
 };
